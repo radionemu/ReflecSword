@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2022 웹프로그래밍 팀프로젝트</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="Block.css">
+        <link rel="stylesheet" href="UIStyle.css">
+        <link rel="stylesheet" href="Layer.css">
+        <link href="https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Francois+One&family=Oleo+Script+Swash+Caps:wght@700&family=Rubik+Glitch&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="Block.js"></script>
+    </head>
+    <body class="isMain">
+        <div id="backgroundPage"></div>
+        <!-- 타이틀 UI -->
+        <div id="Title">
+            <img id="Titlebg" class="pixelated" src="TITLE/TITLE.png">
+            <label id="TitleText">REFLEC SWORD</label>
+            <input type="image" src="start.png" id="startButton" value="Start" onclick="onGame();">
+        </div>
+
+        <!-- mainmenu UI -->
+        <div id="MainMenu">
+            <!-- background -->
+            <div id="menu_back"><img class="pixelated" id="backimg" src="Main_Menu/BackGround/menu1.png" width="900"></div>
+            <!-- menu -->
+            <ul class="menus" id="menui">
+                <li>
+                    <div id="gamebegins" onclick="Menu2Cutscene()">
+                        <div class="buttonimage"><img id="biimg1" class="pixelated" src="Main_Menu/Button/Button_0.png"></div>
+                        <div class="buttontext"><p>START</p></div>
+                    </div>
+                </li>
+                <li>
+                    <div id="settingButton" onclick="Menu2Setting()">
+                        <div class="buttonimage"><img id="biimg2" class="pixelated" src="Main_Menu/Button/Button_0.png"></div>
+                        <div class="buttontext"><p>SETTING</p></div>
+                    </div>
+                <li>
+                    <div id="tutorialButton" onclick="Menu2Tutorial()">
+                        <div class="buttonimage"><img id="biimg3" class="pixelated" src="Main_Menu/Button/Button_0.png"></div>
+                         <div class="buttontext"><p>TUTORIAL</p></div>
+                    </div>
+                <li>
+                    <div id="creditButton" onclick="Menu2Credit()">
+                        <div class="buttonimage"><img id="biimg4" class="pixelated" src="Main_Menu/Button/Button_0.png"></div>
+                        <div class="buttontext"><p>CREDIT</p></div>
+                    </div>
+                </li>
+            </ul>
+            <!-- SETTING -->
+            <!-- 배경음악 선택 버튼 & 공 색깔 선택 -->
+            <div id="setting">
+                <h2>SETTING</h2>
+                <ul class="setmenu">
+                    <li id="bc">
+                        <div class="mtitle">
+                            <h2>BALL COLOR</h2>
+                        </div>
+                        <div id="bcolor" class="minfo">
+                            <canvas id="ballCanvas"></canvas>
+                            <ul id="ballcp">
+                                <li>
+                                    <input type="range" id="bred" value="255" min="0" max="255" oninput="ball_color_setting()" onchange="ball_color_setting()">
+                                </li>
+                                <li>
+                                    <input type="range" id="bgreen" value="0" min="0" max="255" oninput="ball_color_setting()" onchange="ball_color_setting()">
+                                </li>
+                                <li>
+                                    <input type="range" id="bblue" value="0" min="0" max="255" oninput="ball_color_setting()" onchange="ball_color_setting()">
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="lc">
+                        <div class="mtitle">
+                            <h2>LINE COLOR</h2>
+                        </div>
+                        <div class="minfo">
+                            <canvas id="lineCanvas"></canvas>
+                            <ul id="linecp">
+                                <li>
+                                    <input type="range" id="lred" value="0" min="0" max="255" oninput="line_color_setting()" onchange="line_color_setting()">
+                                </li>
+                                <li>
+                                    <input type="range" id="lgreen" value="0" min="0" max="255" oninput="line_color_setting()" onchange="line_color_setting()">
+                                </li>
+                                <li>
+                                    <input type="range" id="lblue" value="0" min="0" max="255" oninput="line_color_setting()" onchange="line_color_setting()">
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="mc">
+                        <div class="mtitle">
+                            <h2>MUSIC</h2>
+                        </div>
+                        <div class="minfo">
+                            <input type="range" id="music" value="100" min="0" max="100" oninput="bgm_setting()" onchange="bgm_setting()">
+                        </div>
+                    </li>
+                    <li id="sc">
+                        <div class="mtitle">
+                            <h2>SE</h2>
+                        </div>
+                        <div class="minfo">
+                            <input type="range" id="se" value="100" min="0" max="100" oninput="se_setting()" onchange="se_setting()" onmousedown="sampleSE()">
+                        </div>
+                    </li>
+                    <li id="saveset">
+                        <div id="save" onclick="Setting2Menu()">
+                            <div class="buttonimage"><img class="pixelated" src="Main_Menu/Button/Button_1.png" width="250px" height="auto"></div>
+                            <div class="buttontext"><p>SAVE</p></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="tutorial">
+                <div id="bbutton1" onclick="Tutorial2Menu()">
+                    <div class="buttonimage"><img class="pixelated" src="Main_Menu/Button/Button_1.png" width="250px" height="auto"></div>
+                    <div class="buttontext"><p>BACK</p></div>
+                </div>
+                <div id="h2p"><label id="how2title">HOW TO PLAY</label></div>
+                <div id="h2pcursor"><img class="pixelated" src="cur/cursor.png"></div>
+                <div id="control" class="kortext"><label>조작키 : 마우스 드래그로 막대 생성</label></div>
+                <div id="itemz" class="kortext"><label>아이템 블럭</label></div>
+                <div id="h2pclkup"><img class="pixelated" src="GamePlay/BLOCK/Clk_up.png"></div>
+                <div id="clkup" class="kortext"><label>속도 증가</label></div>
+                <div id="h2pclkdn"><img class="pixelated" src="GamePlay/BLOCK/Clk_dwn.png"></div>
+                <div id="clkdn" class="kortext"><label>속도 감소</label></div>
+                <div id="h2pdouble"><img class="pixelated" src="GamePlay/BLOCK/double.png"></div>
+                <div id="db" class="kortext"><label>공 개수 1개 추가</label></div>
+            </div>
+            <div id="credit">
+                <div id="oncredit">
+                    <div id="ljb" class="kortext name"><label>이정빈</label></div>
+                    <div id="ljbj" class="kortext"><label>디렉터, 그래픽 디자이너</label></div>
+                    <div id="yuj" class="kortext name"><label>유의진 </label></div>
+                    <div id="yujj" class="kortext"><label> 코어 시스템 프로그래머</label></div>
+                    <div id="csy" class="kortext name"><label>최서연 </label></div>
+                    <div id="csyj" class="kortext"><label> UI 프로그래머</label></div>
+                    <div id="tjh" class="kortext name"><label>태지현 </label></div>
+                    <div id="tjhj" class="kortext"><label> 레벨 디자이너, 레벨 프로그래머</label></div>
+                </div>
+                <div id="bbutton2" onclick="Credit2Menu()">
+                    <div class="buttonimage"><img class="pixelated" src="Main_Menu/Button/Button_1.png" width="250px" height="auto"></div>
+                    <div class="buttontext"><p>BACK</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 컷씬 -->
+        <div id="ics_master">
+            <div id="ics_1"><img class="pixelated" src="Cutscene/cut1.png"></div>
+            <div id="ics_2"><img class="pixelated" src="Cutscene/cut2.png"></div>
+            <div id="ics_3"><img class="pixelated" src="Cutscene/cut3.png"></div>
+            <div id="ics_4"><img class="pixelated" src="Cutscene/cut4.png"></div>
+            <div id="ics_5"><img class="pixelated" src="Cutscene/cut5.png"></div>
+            <div id="ics_background"></div>
+        </div>
+
+        <!-- 대화창 -->
+        <div id="Dialogue">
+            <div id="lPort"></div>
+            <div id="rPort"></div>
+            <div id="DUI"></div>
+            <div id="backFilter"></div>
+        </div>
+
+        <!-- 스테이지 선택 -->
+        <div id="Stage">
+            <div id="stageBack"><img class="pixelated" id="stgback" src="StageSelect/BACK/Back1.png" width="900"></div>
+            <div id="phase1">
+                <div class="st" id="s_1" onclick="stagesn(1)"><img class="pixelated" id="stg1" src="StageSelect/STAGE/stg1_uncom.png" width="100"></div>
+                <div class="st" id="s_2" onclick="stagesn(2)"><img class="pixelated" id="stg2" src="StageSelect/STAGE/locked.png" width="100"></div>
+            </div>
+            <div id="phase2">
+                <div class="st" id="s_3" onclick="stagesn(3)"><img class="pixelated" id="stg3" src="StageSelect/STAGE/locked.png" width="100"></div>
+                <div class="st" id="s_4" onclick="stagesn(4)"><img class="pixelated" id="stg4" src="StageSelect/STAGE/locked.png" width="100"></div>
+            </div>
+            <div id="phase3">
+                <div class="st" id="s_5" onclick="stagesn(5)"><img class="pixelated" id="stg5" src="StageSelect/STAGE/locked.png" width="100"></div>
+            </div>
+            <div class="left" id="stg_left" onclick="leftleftRevolution()"><img class="pixelated" id="leftic" src="UI/larrow.png" width="100"></div>
+            <div class="right" id="stg_right" onclick="rightrightRevolution()"><img class="pixelated" id="rightic" src="UI/rarrow.png" width="100"></div>
+            <div id="whiteout"></div>
+            <div id="topui">
+                <div id="top1"><img class="pixelated" id="t1" src="StageSelect/TOP/TOP1.png"></div>
+                <div id="top2"><img class="pixelated" id="t2" src="StageSelect/TOP/TOP2.png"></div>
+                <div id="top3"><img class="pixelated" id="t3" src="StageSelect/TOP/TOP3.png"></div>
+                <div id="top4"><img class="pixelated" id="t4" src="StageSelect/TOP/TOP4.png"></div>
+                <div id="top5"><img class="pixelated" id="t5" src="StageSelect/TOP/TOP5.png"></div>
+                <div id="HI-SCORE">0000000</div>
+            </div>
+            <div id="stgplayer"><img class="pixelated" id="player" src="Player/stgplayer.png" width="50px"></div>
+            <div id="allcomplete">
+                <div id="allcomplted">
+                    <img class="pixelated" id="allstgcom" src="UI/Dialogue.png">
+                    <label id="allstagecom">CONGRATULATION</label>
+                    <label id="alls-hiscr">TOTAL</label>
+                    <label id="alls-hiscrn">0000000</label>
+                    <label id="allb2stg" onclick="fadeout('allcomplete')">BACK</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 게임플레이 -->
+        <div id="GAMEPLAY">
+            <div id="backgame"><img class="pixelated" id="gameback" src="GamePlay/BACK/map1.png" width="900"></div>
+            <div id="screencover">
+                <div id="screen">
+                    <canvas id="Layer_Background" width="450" height="600"></canvas>
+                    <canvas id="Layer_Object" width="450" height="600"></canvas>
+                    <canvas id="Layer_Healthbar" width="450" height="600"></canvas>
+                    <canvas id="Layer_DrawBack" width="450" height="600"></canvas>
+                    <canvas id="Layer_Ball" width="450" height="600"></canvas>
+                    <canvas id="Layer_Draw" width="450" height="600"></canvas>
+                </div>
+            </div>
+            <div id="comboindicator">
+                <label id="combotxt">COMBO</label>
+                <label id="combonum">0</label>
+            </div>
+            <div id="lifeindicator">
+                <label id="lifetxt">life</label>
+                <label id="lifenum">3</label>
+            </div>
+            <div id="respawnindicator">
+                <label id="resptxt">RESPAWN</label>
+                <label id="respnum">3</label>
+            </div>
+            <div id="scoreindicator">
+                <label id="score">0000000</label>
+                <label id="plusnum">+0</label>
+            </div>
+            <div id="complete">
+                <div id="complted">
+                    <img class="pixelated" id="stgcom" src="UI/Dialogue.png">
+                    <label id="stagecom">COMPLETE</label>
+                    <label id="s-hiscr">HI-SCORE</label>
+                    <label id="s-hiscrn">0000000</label>
+                    <label id="s-scr">SCORE</label>
+                    <label id="s-scrn">0000000</label>
+                    <label id="b2stg" onclick="game2stg('complete')">BACK</label>
+                </div>
+            </div>
+            <div id="failedabs">
+                <div id="failed">
+                    <img class="pixelated" id="stgfailed" src="UI/Dialogue.png">
+                    <label id="stageFailed">FAILED</label>
+                    <label id="f-hiscr">HI-SCORE</label>
+                    <label id="f-hiscrn">0000000</label>
+                    <label id="f-scr">SCORE</label>
+                    <label id="f-scrn">0000000</label>
+                    <label id="again" onclick="again2022('failedabs')">AGAIN</label>
+                    <label id="back2stg" onclick="game2stg('failedabs')">BACK</label>
+                </div>
+            </div>
+        </div>
+        <div id="time"></div>
+        <script type="text/javascript" src="Background.js"></script>
+        <script type="text/javascript" src="Ball_Move.js"></script>
+        <script type="text/javascript" src="canvasDraw.js"></script>
+        <script type="text/javascript" src="BallDetection.js"></script>
+
+    </body>
+</html>

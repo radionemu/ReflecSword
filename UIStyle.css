@@ -1,0 +1,36 @@
+.pixelated {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+}
+
+.fadeout{
+    animation-duration: 0.8s;
+    animation-name: fadeout;
+}
+.fadein{
+    animation-duration: 0.8s;
+    animation-name: fadein;
+}
+
+@keyframes fadeout {
+    from{
+        opacity: 100%;
+    }
+    to{
+        opacity: 0%;
+        display: none;
+    }
+}
+
+@keyframes fadein {
+    from{
+        display: block;
+        opacity: 0%;
+    }
+    to{
+        opacity: 100%;
+    }
+}

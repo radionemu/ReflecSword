@@ -1,0 +1,13 @@
+#screen{
+    width: 450px;
+    height: 600px;
+    position: relative;
+}
+
+canvas{position: absolute;}
+#Layer_Background{z-index: 0; background: black; opacity: 30%}
+#Layer_Object{z-index: 1;}
+#Layer_Healthbar{z-index: 2;}
+#Layer_DrawBack{z-index: 3;}
+#Layer_Ball{z-index: 4;}
+#Layer_Draw{z-index: 9;}

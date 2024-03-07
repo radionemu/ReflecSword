@@ -1,0 +1,804 @@
+@font-face{
+    font-family: "NewHiScore";
+    src: url("Font/NewHiScore.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face{
+    font-family: "Gravity";
+    src: url("Font/GravityBold8.ttf") format("truetype");
+    font-weight: bold;
+}
+@font-face{
+    font-family: "Gravity";
+    src: url("Font/GravityRegular5.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face{
+    font-family: "Stardust";
+    src: url("Font/PFStardust.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: CompassGold;
+    src: url("Font/CompassGold.ttf") format("truetype");
+    font-weight: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'NewHiScore', sans-serif;
+    font-size: 40px;
+    cursor: url("cur/cursor.png"),pointer;
+}
+li{list-style: none;}
+body{
+    width: 900px;
+    margin: 0 auto;
+}
+#Title{
+    position: relative;
+    z-index: 2;
+}
+#Titlebg{
+    width: 900px;
+    height: 600px;
+    position: relative;
+    z-index: 2;
+}
+img{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*메인메뉴*/
+#MainMenu{
+    display: none;
+    position: relative;
+    width: 900px;
+    height: 600px;
+}
+#menu_back{
+    z-index: 0;
+}
+#backimg{
+    height: 600px;
+    width: auto;
+    z-index: 0;
+}
+.menus{
+    z-index: 1;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.menus li{
+    list-style: none;
+}
+.menus > li > div {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
+.menus > li .buttonimage > img{
+    width: 250px;
+    height: auto;
+}
+.menus > li .buttontext{
+    position: absolute;
+    top: 48%;left: 52%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+.menus > li .buttontext p{
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 26px;
+    color: white;
+    text-shadow: 3px 3px 0 darkgreen;
+}
+/*환결설정*/
+#setting{
+    display: none;
+    position: absolute;
+    top:0%;
+}
+#setting *{
+    font-family: Gravity;
+    font-weight: bold;
+    text-shadow: 3px 3px 0 darkgreen;
+    color: white;
+}
+#setting>h2{
+    margin-bottom: 20px;
+}
+.mtitle{
+    margin-left: 30px;
+}
+.minfo{
+    margin: 50px;
+}
+.setmenu{
+    width: 900px;
+    height: 550px;
+    position: relative;
+}
+#saveset .buttonimage>img{
+    width: 250px; height: auto;
+    position: absolute;
+    top: 95%;
+    left: 95%;
+    transform: translateY(-100%) translateX(-100%);
+}
+#saveset .buttontext{
+    position: absolute;
+    top: 90%;
+    left: 90%;
+    transform: translateY(-100%) translateX(-100%);
+}
+
+/*공컬러픽커*/
+#lc{height: 230px; position: absolute; top:50%}
+#lcolor{
+    position: relative;
+}
+#lineCanvas{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+#linecp{
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+/*선컬러픽커*/
+#bc{height: 230px; position: absolute; top:0%;}
+#bcolor{
+    position: relative;
+}
+#ballCanvas{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+#ballcp{
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+#mc{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+}
+#sc{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+/*튜토리얼*/
+#tutorial{
+    display: none;
+    position: absolute;
+    width: 900px;
+    height: 600px;
+    top: 0%;
+}
+#tutorial *{
+    font-family: Gravity;
+    text-shadow: 3px 3px 0 darkgreen;
+    color: white;
+}
+
+#bbutton1 .buttonimage>img{
+    width: 200px; height: auto;
+    position: absolute;
+    top: 95%;
+    left: 95%;
+    transform: translateY(-100%) translateX(-100%);
+}
+#bbutton1 .buttontext{
+    position: absolute;
+    top: 91%;
+    left: 91%;
+    transform: translateY(-100%) translateX(-100%);
+}
+#bbutton2 .buttonimage>img{
+    width: 200px; height: auto;
+    position: absolute;
+    top: 95%;
+    left: 95%;
+    transform: translateY(-100%) translateX(-100%);
+}
+#bbutton2 .buttontext{
+    position: absolute;
+    top: 91%;
+    left: 91%;
+    transform: translateY(-100%) translateX(-100%);
+}
+#bbutton1 .buttontext p{
+    font-size: 30px;
+}
+#bbutton2 .buttontext p{
+    font-size: 30px;
+}
+
+/*크레딧*/
+#credit{
+    display: none;
+}
+.kortext{
+    position: absolute;
+}
+.name label{
+    font-size: 40px !important;
+}
+#ljb{
+    top : 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#ljbj{
+    top : 15%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#yuj{
+    top : 25%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#yujj{
+    top : 35%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#csy{
+    top : 45%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#csyj{
+    top : 55%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#tjh{
+    top : 65%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#tjhj{
+    top : 75%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#credit *{
+    font-family: Gravity;
+    text-shadow: 3px 3px 0 darkgreen;
+    color: white;
+}
+.kortext label{
+    font-family: Stardust !important;
+    font-size: 30px;
+
+}
+/*컷씬*/
+#ics_master{
+    width: 900px;
+    height: 600px;
+    display: none;
+}
+#ics_master div{
+    display: none;
+    width: 900px;
+    height: 600px;
+}
+#ics_master img{
+    width: 900px;
+    height: 600px;
+}
+
+/*스테이지 설렉트*/
+#Stage{
+    display: none;
+    width: 900px;
+    height: 600px;
+    position: relative;
+}
+#stageBack{
+    width: 900px;
+    height: 600px;
+}
+#Stage .st{
+    position: absolute;
+    width: 100px;
+    height: auto;
+}
+
+#s_1{
+    top: 50%;
+    left: 20%;
+}
+#s_2{
+    top: 66%;
+    left : 60%;
+}
+#s_3{
+    top: 66%;
+    left: 32%;
+}
+#s_4{
+    top: 43%;
+    left: 65%;
+}
+#s_5{
+    top: 20%;
+    left: 60%;
+}
+#phase2{
+    display: none;
+}
+#phase3{
+    display: none;
+}
+
+#top1{display: none; width: 450px; position: absolute; top: 0; left:0;}
+#top2{display: none; width: 450px; position: absolute; top: 0; left:0;}
+#top3{display: none; width: 450px; position: absolute; top: 0; left:0;}
+#top4{display: none; width: 450px; position: absolute; top: 0; left:0;}
+#top5{display: none; width: 450px; position: absolute; top: 0; left:0;}
+
+#HI-SCORE{
+    display: none; position: absolute; top : 6%; left: 10%;
+    font-size: 36px;
+}
+#whiteout{
+    width: 900px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: white;
+    z-index: 999;
+}
+
+#stg_left{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+}
+
+#stg_right{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    left: 98%;
+    transform: translateX(-100%) translateY(-50%);
+}
+
+/*게임플레이*/
+#GAMEPLAY{
+    display: none;
+    position: relative;
+    width: 900px;
+    height: 600px;
+}
+#screencover{
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#backgame{
+    width: 900px;
+    height: 600px;
+}
+#combotxt{
+    position: absolute;
+    top : 5%;
+    left : 3%;
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#combonum{
+    position: absolute;
+    top : 12.5%;
+    left : 12.5%;
+    transform: translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+#lifetxt{
+    position: absolute;
+    bottom : 5%;
+    left : 12%;
+    transform: translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#lifenum{
+    position: absolute;
+    bottom : 12.5%;
+    left : 12.5%;
+    transform: translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#score{
+    position: absolute;
+    top : 5%;
+    right : 5%;
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#plusnum{
+    position: absolute;
+    top : 12.5%;
+    right : 2.5%;
+    transform: translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#resptxt{
+    position: absolute;
+    top : 40%;
+    left : 50%;
+    transform : translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#respawnindicator{
+    display: none;
+}
+#respnum{
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translateX(-50%);
+    font-family: Gravity;
+    font-weight: bold;
+    font-size: 70px;
+    color: white;
+    text-shadow: 5px 5px 0px darkblue;
+}
+
+#failed{
+    position: relative;
+    width: 500px;
+    height: 300px;
+}
+#failed *{
+    font-family: Gravity;
+    font-weight: normal;
+    color: white;
+    font-size: 20px;
+    text-shadow: 4px 4px 0px darkblue;
+}
+
+#stgfailed{
+    position : absolute;
+    width: 500px;
+    height: 300px;
+}
+
+#stageFailed{
+    position : absolute;
+    top: 15%;
+    left : 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#f-hiscr{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(-110%);
+}
+#f-hiscrn{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(10%);
+}
+
+#f-scr{
+    position : absolute;
+    top: 45%;
+    left : 50%;
+    transform: translateX(-110%);
+}
+#f-scrn{
+    position : absolute;
+    top: 45%;
+    left : 50%;
+    transform: translateX(10%);
+}
+
+#again{
+    position : absolute;
+    top: 70%;
+    left : 30%;
+    transform: translateX(-50%);
+}
+#again:hover {
+    color: yellow;
+}
+#back2stg{
+    position : absolute;
+    top: 70%;
+    left : 70%;
+    transform: translateX(-50%);
+}
+#back2stg:hover{
+    color: yellow;
+}
+
+#complted{
+    position: relative;
+    width: 500px;
+    height: 300px;
+}
+#complted *{
+    font-family: Gravity;
+    font-weight: normal;
+    color: white;
+    font-size: 20px;
+    text-shadow: 4px 4px 0px darkblue;
+}
+
+#stgcom{
+    position : absolute;
+    width: 500px;
+    height: 300px;
+}
+
+#stagecom{
+    position : absolute;
+    top: 15%;
+    left : 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#s-hiscr{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(-110%);
+}
+#s-hiscrn{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(10%);
+}
+
+#s-scr{
+    position : absolute;
+    top: 45%;
+    left : 50%;
+    transform: translateX(-110%);
+}
+#s-scrn{
+    position : absolute;
+    top: 45%;
+    left : 50%;
+    transform: translateX(10%);
+}
+
+#b2stg{
+    position : absolute;
+    top: 70%;
+    left : 50%;
+    transform: translateX(-50%);
+}
+#b2stg:hover{
+    color: yellow;
+}
+
+#complete{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+}
+#failedabs{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+}
+
+#how2title{
+    position: absolute;
+    font-family: Gravity;
+    font-size: 50px;
+    font-weight: bold;
+    top: 5%;
+    left: 30%;
+    transform: translateX(-50%);
+
+}
+
+#h2pcursor{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+#control{
+    position: absolute;
+    top: 16%;
+    left: 16%;
+}
+
+#itemz{position: absolute;
+top: 25%;
+left: 10%;}
+
+#h2pclkup{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+}
+
+#clkup{
+    position: absolute;
+    top:36%;
+    left: 16%;
+}
+#h2pclkdn{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top:40%;
+    left: 30%;
+}
+#clkdn{
+    position: absolute;
+    top: 36%;
+    left: 36%;
+}
+
+#h2pdouble{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top:40%;
+    left: 50%;
+}
+#db{
+    position: absolute;
+    top: 36%;
+    left: 56%;
+}
+
+#stgplayer{
+    position: absolute;
+    display: none;
+    width: 50px;
+}
+
+#TitleText{
+    position: absolute;
+    font-family: CompassGold;
+    font-size: 120px;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    white-space: nowrap;
+    color: gold;
+    text-shadow: 3px 3px 0 black;
+}
+#startButton{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform:translateX(-50%) translateY(-50%);
+    z-index: 99;
+}
+
+#allcomplete{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: none;
+}
+#allcomplted{
+    position: relative;
+    width: 500px;
+    height: 300px;
+}
+#allstagecom {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    font-weight: bold;
+}
+#allcomplted * {
+    font-family: Gravity;
+    font-weight: normal;
+    color: white;
+    font-size: 20px;
+    text-shadow: 4px 4px 0px darkblue;
+}
+
+#alls-hiscr{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(-110%);
+}
+#alls-hiscrn{
+    position : absolute;
+    top: 35%;
+    left : 50%;
+    transform: translateX(10%);
+}
+
+#allb2stg{
+    position : absolute;
+    top: 70%;
+    left : 50%;
+    transform: translateX(-50%);
+}
+#b2stg:hover{
+    color: yellow;
+}
