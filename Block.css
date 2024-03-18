@@ -242,6 +242,7 @@ img{
 }
 .name label{
     font-size: 40px !important;
+    width: auto;
 }
 #ljb{
     top : 5%;
@@ -252,6 +253,7 @@ img{
     top : 15%;
     left: 50%;
     transform: translateX(-50%);
+    width: max-content;
 }
 #yuj{
     top : 25%;
@@ -292,7 +294,7 @@ img{
 .kortext label{
     font-family: Stardust !important;
     font-size: 30px;
-
+    width: 800px;
 }
 /*컷씬*/
 #ics_master{

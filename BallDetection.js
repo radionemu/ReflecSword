@@ -92,10 +92,10 @@ function sstart(){
         startTime=new Date();
     }else{
         bHP = 8;
-        zakos = [{zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-            {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-            {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-            {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2}];
+        zakos = [];
+        for(i=0;i<8;i++){
+            zakos.push(new ZAKO());
+        }
         lock = true;
         imgB.src = "Boss/bossn.png";
         defeated =0;
@@ -122,12 +122,27 @@ var bHP = 8;
 var canbhit = false;
 
 //자코 스펙
-var zakos = [{zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-    {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-    {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2},
-    {zposX : 0, zposY : 0, zhp:2},{zposX : 0, zposY : 0, zhp:2}];
+class ZAKO{
+    constructor(){
+        this.zposX=0;
+        this.zposY=0;
+        this.zprevX=0;
+        this.zprevY=0;
+        this.zdx=0;
+        this.zdy=0;
+        this.zrad = 25;
+        this.zhp=2;
+        this.collision="";
+    }
+}
+
+var zakos = [];
 var zwidth = 50;
 var zheight = 50;
+
+function len2circle(z,b){
+    return z.zrad+b.br > Math.sqrt(Math.pow(z.zposX-b.bx,2)+Math.pow(z.zposY-b.by,2)); 
+}
 
 //보스한정 리플렉트
 function BossRelfect(b){
@@ -136,6 +151,7 @@ function BossRelfect(b){
     var tB = bposY;
     var bB = bposY + bheight;
     var rtrue = false;
+
     if((b.bx>=lB-b.br&&b.bx<=rB+b.br) && (b.by>=tB-b.br&&b.by<=bB+b.br)) {
         //기울기 정하기
         var x1 = bposX + bwidth/2;
@@ -156,13 +172,10 @@ function BossRelfect(b){
         }
         if(b.by>=tB&&b.by<=bB){
             b.dx = -b.dx;
-            //아프다고 해야하나..?
             rtrue = true;
         }
         if(b.bx>=lB&&b.bx<=rB){
             b.dy = -b.dy;
-            //아프다고 해야하나..?
-
             rtrue = true;
         }
     }
@@ -170,50 +183,58 @@ function BossRelfect(b){
     return rtrue;
 }
 
+var isHITTT = false;
+
 //자코
-function zakoRelfect(z, b){
-    var lB = z.zposX;
-    var rB = z.zposX + zwidth;
-    var tB = z.zposY;
-    var bB = z.zposY + zheight;
+function zakoCollisionDetection(z, b){
     var rtrue = false;
-    if((b.bx>=lB-b.br&&b.bx<=rB+b.br) && (b.by>=tB-b.br&&b.by<=bB+b.br)) {
-        //기울기 정하기
-        var x1 = z.zposX + zwidth/2;
-        var y1 = z.zposY + zheight/2;
 
-        var m = zheight/zwidth;
-        var mprime = (b.by-y1)/(b.bx-x1)
-        //기울기 비교하기
-        if(isFinite(mprime)){
-            if(m < Math.abs(mprime)){
-                var b1 = y1 - x1*mprime;
-                b.by = b.by-y1 < 0 ? z.zposY-b.br-1 : z.zposY+zheight + b.br+1;
-                b.bx = (b.by-b1)/mprime;
-            }
-            else if(m >= Math.abs(mprime)){
-                var b1 = y1 - x1*mprime;
-                b.bx = b.bx - x1 > 0 ? z.zposX+zwidth+b.br+1:z.zposX - b.br-1;
-                b.by = b.bx * mprime + b1;
-            }
-        }else{
-            b.by = b.by-y1 < 0 ? z.zposY-b.br-1 : z.zposY+zheight + b.br+1;
-        }
-        if(b.by>=tB&&b.by<=bB){
-            b.dx = -b.dx;
-            //아프다고 해야하나..?
-            rtrue = true;
-        }
-        if(b.bx>=lB&&b.bx<=rB){
-            b.dy = -b.dy;
-            //아프다고 해야하나..?
+    var dxb = b.bx-b.pbx; var dyb = b.dy-b.pby; var dxz = z.zposX-z.zprevX; var dyz = z.zposY-z.zprevY;
+    var cxb = b.bx; var cyb = b.by; var cxz = z.zposX; cyz = z.zposY;
+    var pxb = b.pbx; var pyb = b.pby; var pxz = z.zprevX+z.zrad; var pyz = z.zprevY+z.zrad;
+    var r1 = b.br; var r2 = z.zrad;
 
+    var px = pxb-pxz; var cx = cxb-cxz; var py = pyb-pyz; var cy = cyb-cyz; 
+    var pcx = px - cx; var pcy = py-cy;
+    var da = Math.pow(pcx,2)+Math.pow(pcy,2);
+    var db = pcx*cx+pcy*cy; //check later
+    var dc = Math.pow(cx,2)+Math.pow(cy,2)-Math.pow(r1+r2,2);
+
+    var det = db*db - da*dc;
+
+    isHITTT = false;
+    var t = -1;
+
+    if(det >= 0){
+        var result1 = (-db + Math.sqrt(det)) / da;
+        var result2 = (-db - Math.sqrt(det)) / da;
+        if((result1>=0 && result1<=1)||(result2>=0 && result2<=1)){
+            console.log("HiT! HiT! HiT!");
+            isHITTT = true;
             rtrue = true;
+            result1 = result1 >= 0 ? result1 : 999; result1 = result1 <= 1 ? result1 : 999;
+            result2 = result2 >= 0 ? result2 : 999; result2 = result2 <= 1 ? result2 : 999;
+            t = Math.min(result1,result2); // final result
         }
-        console.log(b.bx);
-        console.log(b.by);
     }
 
+    if(t != -1){
+        var bxt = pxb*t + (1-t)*cxb; var byt = pyb*t + (1-t)*cyb;
+        var zxt = pxz*t + (1-t)*cxz; var zyt = pyz*t + (1-t)*cyz;
+    
+        //ball-Zako
+        var normal = {x : (bxt-zxt), y : (byt-zyt)};
+        var invec = {x : (b.dx), y : (b.dy)};
+        var invecminus = {x : -invec.x, y: -invec.y};
+        //dydx reflect to Zako Normal surface
+        var dot = invecminus.x * normal.x + invecminus.y +normal.y;
+        var dsize = Math.sqrt(Math.pow(b.dx,2)+Math.pow(b.dy,2));
+        var reflection = {x : (invec.x + 2*normal.x*(dot)), y : (invec.y + 2*normal.y*(dot))};
+        var refsize = Math.sqrt(Math.pow(reflection.x,2)+Math.pow(reflection.y,2));
+        b.dx = reflection.x/refsize*dsize;
+        b.dy = reflection.y/refsize*dsize;
+        console.log(b.dx+" "+b.dy);
+    }
     return rtrue;
 }
 
@@ -224,7 +245,7 @@ var lock = true;
 function BossDetection(b){
     for (var i =0; i<zakos.length; i++){
         if(zakos[i].zhp >0){
-            var ishit = zakoRelfect(zakos[i], b);
+            var ishit = zakoCollisionDetection(zakos[i], b);
             if(ishit == true){
                 zakos[i].zhp--;
                 changeVel(b,1.25, 1);
@@ -269,7 +290,15 @@ function BossDraw(){
     //졸개 그리기
     for(var i=0; i<zakos.length; i++){
         if(zakos[i].zhp >0){
-            blockctx.drawImage(imgBb, zakos[i].zposX, zakos[i].zposY, zwidth, zheight);
+            if(isHITTT){
+                blockctx.beginPath();
+                blockctx.fillStyle = "red";
+                blockctx.arc(zakos[i].zposX+zakos[i].zrad, zakos[i].zposY+zakos[i].zrad, zakos[i].zrad, 0, 2*Math.PI);
+                blockctx.fill();
+                // blockctx.fillRect(zakos[i].zposX, zakos[i].zposY, zwidth, zheight);
+            }else{
+                blockctx.drawImage(imgBb, zakos[i].zposX, zakos[i].zposY, zwidth, zheight);
+            }
         }
     }
     if(isfinal == true){
@@ -288,12 +317,15 @@ var bossr = 100;
 var maxspeed = 2;
 
 function zakoMove(){
+    //s = speed of all zakos
     for(var i=0; i<zakos.length; i++){
         var angle = ((i+s/80)*Math.PI/4)%(Math.PI*2);
         var x = bossr * Math.cos(angle);
         var y = bossr * Math.sin(angle);
+        zakos[i].zprevX = zakos[i].zposX; zakos[i].zprevY = zakos[i].zposY;
         zakos[i].zposX = (bposX+bwidth/2) + x - zwidth/2;
         zakos[i].zposY = (bposY+bheight/2) + y - zwidth/2;
+        zakos[i].zdx = zakos[i].zposX-zakos[i].zprevX; zakos[i].zdy = zakos[i].zposY-zakos[i].zprevY;
     }
 }
 
@@ -303,6 +335,7 @@ function accel(n){
     s += speed;
 }
 
+//return zakos to default position
 async function position(n){
     for(var j =0; j<n; j++){
         var count =0;
@@ -313,8 +346,10 @@ async function position(n){
             var y = bossr * Math.sin(angle);
             var nx = (bposX+bwidth/2) + x-zwidth/2;
             var ny = (bposY+bheight/2) + y-zwidth/2;
+            zakos[i].zprevX = zakos[i].zposX; zakos[i].zprevY = zakos[i].zposY;
             zakos[i].zposX = Lerp(zakos[i].zposX, nx, 0.2);
             zakos[i].zposY = Lerp(zakos[i].zposY, ny, 0.2);
+            zakos[i].zdx = zakos[i].zposX-zakos[i].zprevX; zakos[i].zdy = zakos[i].zposY-zakos[i].zprevY;
             BossDraw();
             if(zakos[i].zposX <= nx+0.5 && zakos[i].zposX >= nx-0.5 && zakos[i].zposY <= ny+0.5 && zakos[i].zposY >= ny-0.5) count++;
         }
@@ -348,7 +383,6 @@ async function bossPattern(){
         var posx = Math.floor(Math.random()*(WIDTH-bwidth));
         var posy = Math.floor(Math.random()*(400-bwidth));
         bossposition(posx, posy, 1000);
-        console.log()
         s = 0;
         if(patternnum == 0){
             if(bHP<=0 || end == true) return;
@@ -393,7 +427,6 @@ async function bossPattern(){
         if(bHP<=0 || end == true) return;
         //자코 정상 포지션으로 돌아오기
         position(1000);
-
         //3초 기다리기
         await timer(3000);
     }
@@ -507,7 +540,6 @@ function GeneralRelfect(block, b){
         }
         if(b.by>=tBrd&&b.by<=bBrd){
             b.dx = -b.dx;
-            //아프다고 해야하나..?
             rtrue = true;
         }
         if(b.bx>=lBrd&&b.bx<=rBrd){

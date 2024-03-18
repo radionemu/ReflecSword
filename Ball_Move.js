@@ -11,11 +11,13 @@ var move;
 
 //공 x좌표, 공 y좌표, 가로벡터, 세로벡터, 공 지름
 var BALL = function(x,y, ddx, ddy, bR){
-    this.bx = x;
-    this.by = y;
-    this.dx = ddx;
-    this.dy = ddy;
-    this.br = bR;
+    this.bx = x; //position X
+    this.by = y; //position Y
+    this.pbx = x;
+    this.pby = y;
+    this.dx = ddx; //velocity X
+    this.dy = ddy; //velocity Y
+    this.br = bR; // Radius r
     this.velocity = 1;
     this.status = 1;
 }
@@ -67,8 +69,6 @@ function result(n){
         sc.style.color = "white";
     }
 }
-var prevx =0;
-var prevy = 0;
 
 function moveBall(){
     ctx.clearRect(0,0,450,600);
@@ -114,15 +114,16 @@ function moveBall(){
             changeAngle = false;
         }
         //벽돌 반사로직
+        b.bx += b.dx;
+        b.by += b.dy;
+        b.pbx = b.bx;
+        b.pby = b.by;
+
         if(currentStage != 5){
             test1(b);
         }else{
             BossDetection(b);
         }
-        prevx = b.bx;
-        prevy = b.by;
-        b.bx += b.dx*b.velocity;
-        b.by += b.dy*b.velocity;
         drawBall(b);
 
         document.getElementById("combonum").innerText="x"+combo;
