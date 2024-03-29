@@ -9,6 +9,7 @@ REFLEC SWORD는 HTML, CSS, Javascript를 사용해 제작한 벽돌깨기 장르
 
 ### Special Commands
 타이틀 화면에서 ↑↑↓↓←→←→AB 입력시 모든 스테이지 해금
+
 컷신에서 스페이스바 2회 연타 시 컷신 스킵 가능
 
 ## Features
